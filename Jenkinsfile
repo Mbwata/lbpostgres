@@ -14,6 +14,6 @@ node {
     }
     stage('snapshot') {
         sh '''liquibase --outputFile=snapshot_$BUILD_NUMBER.json snapshot --snapshotFormat=json
-            '''
+            mv snapshot_$BUILD_NUMBER.json /var/snapshots/snapshot_$BUILD_NUMBER.json'''
     }    
 }
