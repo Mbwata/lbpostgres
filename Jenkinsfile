@@ -1,6 +1,6 @@
 node {
     stage('validate') {
-        git branch: '', url: 'https://github.com/Mbwata/lbpostgres.git'
+        git branch '**': '', url: 'https://github.com/Mbwata/lbpostgres.git'
         sh '''ls -l
             liquibase tag $BUILD_NUMBER
             liquibase status --verbose'''
