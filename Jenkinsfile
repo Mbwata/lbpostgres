@@ -4,7 +4,8 @@ node {
         withCredentials([string(credentialsId: 'pro_key', variable: 'pro_key')]) {
             sh '''ls -l
                 liquibase tag $BUILD_NUMBER
-                liquibase status --verbose --liquibaseProLicenseKey=$pro_key'''
+                #liquibase status --verbose --liquibaseProLicenseKey=$pro_key
+                '''
             }
     }
     stage('update') {
