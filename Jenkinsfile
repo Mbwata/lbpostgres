@@ -5,16 +5,15 @@ node {
             sh '''
                 liquibase tag $BUILD_NUMBER
                 #liquibase status --verbose --liquibaseProLicenseKey=$pro_key
-                liquibase --outputFile=mySnapshot.json snapshot --snapshotFormat=json
                 '''
             }
     }
     stage('update') {
-        sh '''liquibase updateSQL
-            liquibase update'''
+        sh '''#liquibase updateSQL
+            #liquibase update'''
     }
     stage('snapshot') {
-        sh '''liquibase updateSQL
-            liquibase update'''
+        sh '''liquibase --outputFile=snapshot_$BUILD_NUMBER.json snapshot --snapshotFormat=json
+            '''
     }    
 }
