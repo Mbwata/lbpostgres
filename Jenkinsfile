@@ -1,10 +1,11 @@
 node {
     stage('validate') {
-        //git branch '**': '', url: 'https://github.com/Mbwata/lbpostgres.git'
         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mbwata/lbpostgres.git']]])
-        sh '''ls -l
-            liquibase tag $BUILD_NUMBER
-            liquibase status --verbose'''
+        withCredentials([string(credentialsId: 'pro_key', variable: 'pro_key')]) {
+            sh '''ls -l
+                liquibase tag $BUILD_NUMBER
+                liquibase status --verbose --liquibaseProLicenseKey=$pro_key'''
+            }
     }
     stage('update') {
         sh '''liquibase updateSQL
