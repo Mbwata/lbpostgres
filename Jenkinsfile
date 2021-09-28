@@ -1,6 +1,7 @@
 node {
     stage('validate') {
-       sh '''liquibase tag $BUILD_NUMBER
+       sh '''ls -l
+            liquibase tag $BUILD_NUMBER
             liquibase status --verbose'''
     }
     stage('update') {
