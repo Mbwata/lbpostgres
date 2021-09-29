@@ -13,7 +13,7 @@ node {
             liquibase update --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres'''
     }
     stage('Rollback') {
-        sh '''liquibase rollbackSQL --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
+        sh '''liquibase rollbackSQL $BUILD_NUMBER --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
             liquibase rollback $BUILD_NUMBER --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres'''
     } 
     stage('Finalize') {
