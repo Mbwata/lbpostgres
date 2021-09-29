@@ -1,5 +1,5 @@
 node {
-    stage('validate') {
+    stage('Validate') {
         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mbwata/lbpostgres.git']]])
         withCredentials([string(credentialsId: 'pro_key', variable: 'pro_key')]) {
             sh '''
@@ -8,7 +8,7 @@ node {
                 '''
             }
     }
-    stage('update') {
+    stage('Update') {
         sh '''liquibase updateSQL --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
             liquibase update --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres'''
     }
@@ -19,7 +19,7 @@ node {
     stage('Finalize') {
         sh '''liquibase update --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres'''
     }          
-    stage('snapshot') {
+    stage('Snapshot') {
         sh '''liquibase --outputFile=snapshot_$BUILD_NUMBER.json snapshot --snapshotFormat=json --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
             mv snapshot_$BUILD_NUMBER.json /var/jenkins_home/snapshots/snapshot_$BUILD_NUMBER.json'''
     }    
