@@ -21,6 +21,6 @@ node {
     }          
     stage('snapshot') {
         sh '''liquibase --outputFile=snapshot_$BUILD_NUMBER.json snapshot --snapshotFormat=json --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
-            mv snapshot_$BUILD_NUMBER.json /var/jenkins_home/snapshots/snapshot_$BUILD_NUMBER.json --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres'''
+            mv snapshot_$BUILD_NUMBER.json /var/jenkins_home/snapshots/snapshot_$BUILD_NUMBER.json'''
     }    
 }
