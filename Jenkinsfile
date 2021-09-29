@@ -12,6 +12,13 @@ node {
         sh '''#liquibase updateSQL
             #liquibase update'''
     }
+    stage('Rollback') {
+        sh '''#liquibase rollbackSQL
+            #liquibase rollback $BUILD_NUMBER'''
+    } 
+    stage('Finalize') {
+        sh '''#liquibase update'''
+    }          
     stage('snapshot') {
         sh '''liquibase --outputFile=snapshot_$BUILD_NUMBER.json snapshot --snapshotFormat=json
             mv snapshot_$BUILD_NUMBER.json /var/jenkins_home/snapshots/snapshot_$BUILD_NUMBER.json'''
