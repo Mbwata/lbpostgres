@@ -4,20 +4,20 @@ node {
         withCredentials([string(credentialsId: 'pro_key', variable: 'pro_key')]) {
             sh '''
                 liquibase tag $BUILD_NUMBER
-                #liquibase status --verbose --liquibaseProLicenseKey=$pro_key
+                liquibase status --verbose --liquibaseProLicenseKey=$pro_key
                 '''
             }
     }
     stage('update') {
         sh '''#liquibase updateSQL
-            #liquibase update'''
+            liquibase update'''
     }
     stage('Rollback') {
-        sh '''#liquibase rollbackSQL
-            #liquibase rollback $BUILD_NUMBER'''
+        sh '''liquibase rollbackSQL
+            liquibase rollback $BUILD_NUMBER'''
     } 
     stage('Finalize') {
-        sh '''#liquibase update'''
+        sh '''liquibase update'''
     }          
     stage('snapshot') {
         sh '''liquibase --outputFile=snapshot_$BUILD_NUMBER.json snapshot --snapshotFormat=json
