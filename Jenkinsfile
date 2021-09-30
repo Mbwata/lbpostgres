@@ -5,18 +5,18 @@ node {
               liquibase status --verbose'''
     }
     stage('Update') {
-        sh '''liquibase updateSQL --url=jdbc:postgresql://8d9c3c07700d:5432/postgres
-              liquibase update --url=jdbc:postgresql://8d9c3c07700d:5432/postgres'''
+        sh '''liquibase updateSQL
+              liquibase update'''
     }
     stage('Rollback') {
-        sh '''liquibase rollbackSQL $BUILD_NUMBER --url=jdbc:postgresql://8d9c3c07700d:5432/postgres
-              liquibase rollback $BUILD_NUMBER --url=jdbc:postgresql://8d9c3c07700d:5432/postgres'''
+        sh '''liquibase rollbackSQL $BUILD_NUMBER
+              liquibase rollback $BUILD_NUMBER'''
     } 
     stage('Finalize') {
-        sh '''liquibase update --url=jdbc:postgresql://8d9c3c07700d:5432/postgres'''
+        sh '''liquibase update'''
     }          
     stage('Snapshot') {
-        sh '''liquibase --outputFile=snapshot_$BUILD_NUMBER.json snapshot --snapshotFormat=json --url=jdbc:postgresql://8d9c3c07700d:5432/postgres
+        sh '''liquibase --outputFile=snapshot_$BUILD_NUMBER.json snapshot --snapshotFormat=json
               mv snapshot_$BUILD_NUMBER.json /var/jenkins_home/snapshots/snapshot_$BUILD_NUMBER.json'''
     }    
 }
