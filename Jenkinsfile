@@ -1,10 +1,8 @@
 node {
     stage('Validate') {
         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mbwata/lbpostgres.git']]])
-            sh '''
-                liquibase tag $BUILD_NUMBER --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
-                liquibase status --verbose --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
-                '''
+        sh '''liquibase tag $BUILD_NUMBER --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
+            liquibase status --verbose --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres'''
     }
     stage('Update') {
         sh '''liquibase updateSQL --url=jdbc:postgresql://dcc000e8bc4b:5432/postgres
